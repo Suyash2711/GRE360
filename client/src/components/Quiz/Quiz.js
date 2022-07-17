@@ -40,7 +40,7 @@ export default function Quiz() {
       .then(function (response) {
         console.log(response);
         set_ml_Predict(response.data);
-        localStorage.setItem("Chance", response.data[0]);
+        localStorage.setItem("Chance", response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -315,13 +315,51 @@ export default function Quiz() {
                   // predict([data.data.])
                   console.log(cal_score + calc_score_2 + cal_score_3);
                   predict([
-                    cal_score + calc_score_2 + cal_score_3,
-                    data.data.toefl,
-                    1,
-                    data.data.sop,
-                    data.data.lor,
-                    data.data.cgpa,
-                    data.data.research,
+                    [
+                      cal_score + calc_score_2 + cal_score_3,
+                      data.data.toefl,
+                      1,
+                      data.data.sop,
+                      data.data.lor,
+                      data.data.cgpa,
+                      data.data.research,
+                    ],
+                    [
+                      cal_score + calc_score_2 + cal_score_3,
+                      data.data.toefl,
+                      2,
+                      data.data.sop,
+                      data.data.lor,
+                      data.data.cgpa,
+                      data.data.research,
+                    ],
+                    [
+                      cal_score + calc_score_2 + cal_score_3,
+                      data.data.toefl,
+                      3,
+                      data.data.sop,
+                      data.data.lor,
+                      data.data.cgpa,
+                      data.data.research,
+                    ],
+                    [
+                      cal_score + calc_score_2 + cal_score_3,
+                      data.data.toefl,
+                      4,
+                      data.data.sop,
+                      data.data.lor,
+                      data.data.cgpa,
+                      data.data.research,
+                    ],
+                    [
+                      cal_score + calc_score_2 + cal_score_3,
+                      data.data.toefl,
+                      5,
+                      data.data.sop,
+                      data.data.lor,
+                      data.data.cgpa,
+                      data.data.research,
+                    ],
                   ]);
                 }}
               >

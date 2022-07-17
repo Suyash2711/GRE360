@@ -12,15 +12,26 @@ import {
   RadarChart,
   PolarGrid,
   Cell,
+  LineChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Line,
 } from "recharts";
 
 const Dashboard = () => {
   const [data, setData] = useState("");
   const [ml_predict, set_ml_Predict] = useState("");
-  const [score, setScore] = useState(0);
-  const [score_2, setScore_2] = useState(0);
+  // const [result1, setResult1] = useState(0)
+  // const [result2, setResult2] = useState(0);
+  // const [result3, setResult3] = useState(0);
+  // const [result4, setResult4] = useState(0);
+  // const [result5, setResult5] = useState(0);
 
   const COLORS = ["#7A4069", "#CA4E79", "#FFC18E"];
+
+  const score = localStorage.getItem("score");
+  const score_2 = localStorage.getItem("score_2");
 
   const data01 = [
     {
@@ -88,15 +99,43 @@ const Dashboard = () => {
 
   // set_ml_Predict(localStorage.getItem("Chance"));
   // console.log(ml_predict);
-  if (ocalStorage.getItem("Chance")) {
+  if (localStorage.getItem("Chance")) {
     let predicted = localStorage.getItem("Chance");
     let newpred = predicted.split(" ");
-    let result1 = parseFloat(newpred[0].replace("[", "").replace("]", ""));
-    let result2 = parseFloat(newpred[1].replace("[", "").replace("]", ""));
-    let result3 = parseFloat(newpred[2].replace("[", "").replace("]", ""));
-    let result4 = parseFloat(newpred[3].replace("[", "").replace("]", ""));
-    let result5 = parseFloat(newpred[4].replace("[", "").replace("]", ""));
+    var result1 =
+      parseFloat(newpred[0].replace("[", "").replace("]", "")) * 100;
+    var result2 =
+      parseFloat(newpred[1].replace("[", "").replace("]", "")) * 100;
+    var result3 =
+      parseFloat(newpred[2].replace("[", "").replace("]", "")) * 100;
+    var result4 =
+      parseFloat(newpred[3].replace("[", "").replace("]", "")) * 100;
+    var result5 =
+      parseFloat(newpred[4].replace("[", "").replace("]", "")) * 100;
   }
+
+  const data_01 = [
+    {
+      name: "Rank 1",
+      uv: result1,
+    },
+    {
+      name: "Rank 2",
+      uv: result2,
+    },
+    {
+      name: "Rank 3",
+      uv: result3,
+    },
+    {
+      name: "Rank 4",
+      uv: result4,
+    },
+    {
+      name: "Rank 5",
+      uv: result5,
+    },
+  ];
 
   return (
     <>
@@ -254,7 +293,16 @@ const Dashboard = () => {
             <h2>My Courses</h2>
           </div>
           <div className={styles.main_item2_content}>
-            <div className={styles.box2}></div>
+            <div className={styles.box2}>
+              <LineChart width={730} height={250} data={data_01}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+              </LineChart>
+            </div>
           </div>
         </div>
       </div>

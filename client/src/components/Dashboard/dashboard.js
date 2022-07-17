@@ -17,6 +17,7 @@ import {
   XAxis,
   YAxis,
   Line,
+  ResponsiveContainer,
 } from "recharts";
 
 const Dashboard = () => {
@@ -32,6 +33,8 @@ const Dashboard = () => {
 
   const score = localStorage.getItem("score");
   const score_2 = localStorage.getItem("score_2");
+
+  const total = (score / 5) * 120 + (score_2 / 5) * 120 + 120;
 
   const data01 = [
     {
@@ -137,6 +140,12 @@ const Dashboard = () => {
     },
   ];
 
+  const logOut = () => {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("authToken");
+    window.location.href = "/login";
+  };
+
   return (
     <>
       <div className={styles.container}>
@@ -210,11 +219,14 @@ const Dashboard = () => {
         </div>
         <div className={styles.content}>
           <div className={styles.main_item1_heading}>
-            <div className={styles.skills_heading}>
-              <h2>Skills</h2>
-            </div>
+            <div className={styles.skills_heading}></div>
             <div className={styles.help_heading}>
-              <i className="fa fa-cogs" aria-hidden="true"></i>
+              <button
+                className={`btn btn-danger ${styles.lg_out}`}
+                onClick={() => logOut()}
+              >
+                Log Out
+              </button>
             </div>
           </div>
           <div className={styles.main_item1_content}>
@@ -231,7 +243,8 @@ const Dashboard = () => {
               ) : null}
             </div>
             <div className={styles.box2}>
-              <PieChart className={`${styles.pie}`} width={400} height={200}>
+              {/* <ResponsiveContainer className={`${styles.resp}`}> */}
+              {/* <PieChart className={`${styles.pie}`} width={730} height={350}>
                 <Legend />
                 <Tooltip />
                 <Pie
@@ -248,40 +261,49 @@ const Dashboard = () => {
                     <Cell fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-              </PieChart>
+              </PieChart> */}
+              {/* </ResponsiveContainer> */}
             </div>
             <div className={styles.box3}>
-              <RadarChart
-                outerRadius={100}
-                width={500}
-                height={250}
-                className={`${styles.radar}`}
-                data={data_radar}
-              >
-                <Tooltip />
-                <PolarGrid />
-                <PolarAngleAxis dataKey="subject" />
-                <PolarRadiusAxis angle={30} domain={[0, 120]} />
-                <Radar
-                  name="Total"
-                  dataKey="A"
-                  stroke="#FFC18E"
-                  fill="#FFC18E"
-                  fillOpacity={0.6}
-                />
-                <Radar
-                  name="Score"
-                  dataKey="B"
-                  stroke="#CA4E79"
-                  fill="#CA4E79"
-                  fillOpacity={0.6}
-                />
-                <Legend />
-              </RadarChart>
+              {/* <h4 className={`${styles.score_txt}`}>Last Test</h4>
+                <div className={`${styles.score}`}>
+                  <span className={`${styles.total}`}>{total}/346</span>
+                </div> */}
+              {/* <ResponsiveContainer>
+                <RadarChart
+                  outerRadius={100}
+                  width={10}
+                  height={80}
+                  className={`${styles.radar}`}
+                  data={data_radar}
+                >
+                  <Tooltip />
+                  <PolarGrid />
+                  <PolarAngleAxis dataKey="subject" />
+                  <PolarRadiusAxis angle={30} domain={[0, 120]} />
+                  <Radar
+                    name="Total"
+                    dataKey="A"
+                    stroke="#FFC18E"
+                    fill="#FFC18E"
+                    fillOpacity={0.6}
+                  />
+                  <Radar
+                    name="Score"
+                    dataKey="B"
+                    stroke="#CA4E79"
+                    fill="#CA4E79"
+                    fillOpacity={0.6}
+                  />
+                  <Legend />
+                </RadarChart>
+              </ResponsiveContainer> */}
             </div>
             <div className={styles.box4}>
               <div className={styles.box4_content} style={{ color: "white" }}>
-                Next Test{" "}
+                <a href="/quiz" className={`${styles.quizy}`}>
+                  Next Test{" "}
+                </a>
                 <i
                   className="fas fa-arrow-right"
                   style={{ color: "white" }}
@@ -289,12 +311,16 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className={styles.main_item2_heading}>
-            <h2>My Courses</h2>
-          </div>
+          <div className={styles.main_item2_heading}></div>
           <div className={styles.main_item2_content}>
-            <div className={styles.box2}>
-              <LineChart width={730} height={250} data={data_01}>
+            <h4 className={`${styles.hort}`}>ANALYTICS</h4>
+            <div className={styles.box5}>
+              <LineChart
+                width={730}
+                height={250}
+                data={data_01}
+                className={styles.line}
+              >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />

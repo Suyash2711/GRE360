@@ -230,6 +230,7 @@ export default function Quiz() {
                     />
                   </div>
                 </div>
+                <hr />
                 <div className={`${styles.question_text}`}>
                   {Data.section_1[currentQuestion].questionText}
                 </div>
@@ -308,7 +309,7 @@ export default function Quiz() {
         {selectedSection === "results" ? (
           <div className={`${styles.results}`}>
             <h1 className={`${styles.name}`}>
-              {data.data.name}\
+              {data.data.name}
               <button
                 className={`${styles.list_btn}`}
                 onClick={() => {

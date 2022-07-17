@@ -88,13 +88,15 @@ const Dashboard = () => {
 
   // set_ml_Predict(localStorage.getItem("Chance"));
   // console.log(ml_predict);
-  let predicted = localStorage.getItem("Chance");
-  let newpred = predicted.split(" ");
-  let result1 = parseFloat(newpred[0].replace("[", "").replace("]", ""));
-  let result2 = parseFloat(newpred[1].replace("[", "").replace("]", ""));
-  let result3 = parseFloat(newpred[2].replace("[", "").replace("]", ""));
-  let result4 = parseFloat(newpred[3].replace("[", "").replace("]", ""));
-  let result5 = parseFloat(newpred[4].replace("[", "").replace("]", ""));
+  if (ocalStorage.getItem("Chance")) {
+    let predicted = localStorage.getItem("Chance");
+    let newpred = predicted.split(" ");
+    let result1 = parseFloat(newpred[0].replace("[", "").replace("]", ""));
+    let result2 = parseFloat(newpred[1].replace("[", "").replace("]", ""));
+    let result3 = parseFloat(newpred[2].replace("[", "").replace("]", ""));
+    let result4 = parseFloat(newpred[3].replace("[", "").replace("]", ""));
+    let result5 = parseFloat(newpred[4].replace("[", "").replace("]", ""));
+  }
 
   return (
     <>

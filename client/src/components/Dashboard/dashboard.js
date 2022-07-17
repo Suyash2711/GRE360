@@ -1,9 +1,66 @@
 import React, { useState, useEffect } from "react";
 import styles from "./dashboard.module.css";
 import axios from "axios";
+import {
+  PieChart,
+  Pie,
+  Legend,
+  Tooltip,
+  Radar,
+  PolarRadiusAxis,
+  PolarAngleAxis,
+  RadarChart,
+  PolarGrid,
+  Cell,
+} from "recharts";
 
 const Dashboard = () => {
   const [data, setData] = useState("");
+  const [ml_predict, set_ml_Predict] = useState("");
+  const [score, setScore] = useState(0);
+  const [score_2, setScore_2] = useState(0);
+
+  const COLORS = ["#7A4069", "#CA4E79", "#FFC18E"];
+
+  const data01 = [
+    {
+      name: "Verbal",
+      value: (score / 5) * 120,
+    },
+    {
+      name: "Math",
+      value: (score_2 / 5) * 120,
+    },
+    {
+      name: "Writing",
+      value: 5,
+    },
+  ];
+
+  let cal_score = score * 24;
+  let calc_score_2 = score_2 * 24;
+  let cal_score_3 = 3 * 24;
+
+  const data_radar = [
+    {
+      subject: "Verbal",
+      A: 120,
+      B: cal_score,
+      fullMark: 120,
+    },
+    {
+      subject: "Math",
+      A: 120,
+      B: calc_score_2,
+      fullMark: 120,
+    },
+    {
+      subject: "Writing",
+      A: 120,
+      B: cal_score_3,
+      fullMark: 120,
+    },
+  ];
 
   useEffect(() => {
     const getUserData = async () => {
@@ -28,6 +85,16 @@ const Dashboard = () => {
 
     getUserData();
   }, []);
+
+  // set_ml_Predict(localStorage.getItem("Chance"));
+  // console.log(ml_predict);
+  let predicted = localStorage.getItem("Chance");
+  let newpred = predicted.split(" ");
+  let result1 = parseFloat(newpred[0].replace("[", "").replace("]", ""));
+  let result2 = parseFloat(newpred[1].replace("[", "").replace("]", ""));
+  let result3 = parseFloat(newpred[2].replace("[", "").replace("]", ""));
+  let result4 = parseFloat(newpred[3].replace("[", "").replace("]", ""));
+  let result5 = parseFloat(newpred[4].replace("[", "").replace("]", ""));
 
   return (
     <>
@@ -122,8 +189,55 @@ const Dashboard = () => {
                 </>
               ) : null}
             </div>
-            <div className={styles.box2}></div>
-            <div className={styles.box3}></div>
+            <div className={styles.box2}>
+              <PieChart className={`${styles.pie}`} width={400} height={200}>
+                <Legend />
+                <Tooltip />
+                <Pie
+                  data={data01}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={90}
+                  innerRadius={50}
+                  fill="#8884d8"
+                >
+                  {data01.map((entry, index) => (
+                    <Cell fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </div>
+            <div className={styles.box3}>
+              <RadarChart
+                outerRadius={100}
+                width={500}
+                height={250}
+                className={`${styles.radar}`}
+                data={data_radar}
+              >
+                <Tooltip />
+                <PolarGrid />
+                <PolarAngleAxis dataKey="subject" />
+                <PolarRadiusAxis angle={30} domain={[0, 120]} />
+                <Radar
+                  name="Total"
+                  dataKey="A"
+                  stroke="#FFC18E"
+                  fill="#FFC18E"
+                  fillOpacity={0.6}
+                />
+                <Radar
+                  name="Score"
+                  dataKey="B"
+                  stroke="#CA4E79"
+                  fill="#CA4E79"
+                  fillOpacity={0.6}
+                />
+                <Legend />
+              </RadarChart>
+            </div>
             <div className={styles.box4}>
               <div className={styles.box4_content} style={{ color: "white" }}>
                 Next Test{" "}

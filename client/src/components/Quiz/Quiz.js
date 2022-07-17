@@ -443,6 +443,8 @@ export default function Quiz() {
                     />
                     <Legend />
                   </RadarChart>
+                  {localStorage.setItem("score", score)}
+                  {localStorage.setItem("score_2", score_2)}
                 </div>
               </div>
             </div>

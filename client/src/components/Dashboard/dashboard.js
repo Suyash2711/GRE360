@@ -112,12 +112,12 @@ const Dashboard = () => {
           </div>
           <div className={styles.main_item1_content}>
             <div className={styles.box1}>
-              <h3>Name </h3>
-              <h3>Toefl Score </h3>
-              <h3>LOR's </h3>
-              <h3>SOP Rating </h3>
-              <h3>CGPA </h3>
-              <h3>Research Papers </h3>
+              <h3>Name: {data.data.name} </h3>
+              <h3>Toefl Score: {data.data.toefl} </h3>
+              <h3>LOR's: {data.data.lor} </h3>
+              <h3>SOP Rating: {data.data.rating} </h3>
+              <h3>CGPA: {data.data.cgpa} </h3>
+              <h3>Research Papers: {data.data.research} </h3>
             </div>
             <div className={styles.box2}></div>
             <div className={styles.box3}></div>

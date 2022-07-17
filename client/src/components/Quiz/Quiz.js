@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import Data from "./questions.json";
-// import Navbar from "./Navbar";
 import styles from "./Quiz.module.css";
 import axios from "axios";
 import TestFooter from "../Footer/TestFooter";
@@ -14,6 +13,7 @@ import {
   PolarAngleAxis,
   RadarChart,
   PolarGrid,
+  Cell,
 } from "recharts";
 
 export default function Quiz() {
@@ -92,6 +92,8 @@ export default function Quiz() {
   }, []);
 
   const questions = [1, 2, 3, 4, 5];
+
+  const COLORS = ["#7A4069", "#CA4E79", "#FFC18E"];
 
   let active = true;
   const myContainer = useRef(null);
@@ -286,7 +288,10 @@ export default function Quiz() {
         {selectedSection === "results" ? (
           <div className={`${styles.results}`}>
             {console.log(data)}
-            <h1 className={`${styles.name}`}>{data.data.name}</h1>
+            <h1 className={`${styles.name}`}>
+              {data.data.name}
+              <button className={`${styles.list_btn}`}>List</button>
+            </h1>
             <div className={`${styles.grid}`}>
               <div className={`${styles.b_box}`}>
                 SOP Score: {data.data.sop}/5
@@ -302,48 +307,71 @@ export default function Quiz() {
               </div>
               <div className={`${styles.b_box}`}>CGPA: {data.data.cgpa}/10</div>
             </div>
-            <PieChart width={730} height={250}>
-              <Legend />
-              <Tooltip />
-              <Pie
-                data={data01}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={50}
-                innerRadius={25}
-                fill="#8884d8"
-              />
-            </PieChart>
-            <RadarChart
-              outerRadius={100}
-              width={730}
-              height={250}
-              data={data_radar}
-            >
-              <Tooltip />
-              <PolarGrid />
-              <PolarAngleAxis dataKey="subject" />
-              <PolarRadiusAxis angle={30} domain={[0, 120]} />
-              <Radar
-                name="Total"
-                dataKey="A"
-                stroke="#8884d8"
-                fill="#8884d8"
-                fillOpacity={0.6}
-              />
-              <Radar
-                name="Score"
-                dataKey="B"
-                stroke="#82ca9d"
-                fill="#82ca9d"
-                fillOpacity={0.6}
-              />
-              <Legend />
-            </RadarChart>
-            <h4>{score}</h4>
-            <h4>{score_2}</h4>
+            <div className="row">
+              <div className="col-md-6">
+                <div className={`${styles.score_analysis}`}>
+                  <div className={`${styles.sub_heading1}`}>
+                    Score Distribution
+                  </div>
+                  <PieChart
+                    className={`${styles.pie}`}
+                    width={500}
+                    height={250}
+                  >
+                    <Legend />
+                    <Tooltip />
+                    <Pie
+                      data={data01}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={90}
+                      innerRadius={50}
+                      fill="#8884d8"
+                    >
+                      {data01.map((entry, index) => (
+                        <Cell fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className={`${styles.score_analysis2}`}>
+                  <div className={`${styles.sub_heading2}`}>
+                    Score Comparision
+                  </div>
+                  <RadarChart
+                    outerRadius={100}
+                    width={500}
+                    height={250}
+                    className={`${styles.radar}`}
+                    data={data_radar}
+                  >
+                    <Tooltip />
+                    <PolarGrid />
+                    <PolarAngleAxis dataKey="subject" />
+                    <PolarRadiusAxis angle={30} domain={[0, 120]} />
+                    <Radar
+                      name="Total"
+                      dataKey="A"
+                      stroke="#FFC18E"
+                      fill="#FFC18E"
+                      fillOpacity={0.6}
+                    />
+                    <Radar
+                      name="Score"
+                      dataKey="B"
+                      stroke="#CA4E79"
+                      fill="#CA4E79"
+                      fillOpacity={0.6}
+                    />
+                    <Legend />
+                  </RadarChart>
+                </div>
+              </div>
+            </div>
           </div>
         ) : null}
       </div>

@@ -15,6 +15,7 @@ import {
   PolarGrid,
   Cell,
 } from "recharts";
+import { Navigate, Link } from "react-router-dom";
 
 export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -26,6 +27,25 @@ export default function Quiz() {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [timer, setTimer] = useState("00:00:00");
   const [data, setData] = useState("");
+  const [ml_predict, set_ml_Predict] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  async function predict(query) {
+    var payload = {
+      data: query,
+    };
+    console.log(payload);
+    await axios
+      .post("http://localhost:7000/predict", payload)
+      .then(function (response) {
+        console.log(response);
+        set_ml_Predict(response.data);
+        localStorage.setItem("Chance", response.data[0]);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   const data01 = [
     {
@@ -287,10 +307,26 @@ export default function Quiz() {
         ) : null}
         {selectedSection === "results" ? (
           <div className={`${styles.results}`}>
-            {console.log(data)}
             <h1 className={`${styles.name}`}>
-              {data.data.name}
-              <button className={`${styles.list_btn}`}>List</button>
+              {data.data.name}\
+              <button
+                className={`${styles.list_btn}`}
+                onClick={() => {
+                  // predict([data.data.])
+                  console.log(cal_score + calc_score_2 + cal_score_3);
+                  predict([
+                    cal_score + calc_score_2 + cal_score_3,
+                    data.data.toefl,
+                    1,
+                    data.data.sop,
+                    data.data.lor,
+                    data.data.cgpa,
+                    data.data.research,
+                  ]);
+                }}
+              >
+                <Link to="/dashboard">List</Link>
+              </button>
             </h1>
             <div className={`${styles.grid}`}>
               <div className={`${styles.b_box}`}>
